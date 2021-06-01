@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GraphQLTesting.Models;
+using System.Net;
 
 namespace GraphQLTesting.Controllers
 {
@@ -97,6 +98,27 @@ namespace GraphQLTesting.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        public class UserInfo
+        {
+            public int Id { get; set; }
+            public string Email { get; set; }
+        }
+        [HttpPut("api/useraccounts/change-email")]
+        public async Task<IActionResult> ChangeEmail([FromBody] UserInfo userInfo)
+        {
+            var user = await _context.UserAccounts.FindAsync(userInfo.Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            
+            user.Email = userInfo.Email;
+            _context.SaveChanges();
+
+            return Ok(HttpStatusCode.OK);
         }
 
         private bool UserAccountsExists(int id)
