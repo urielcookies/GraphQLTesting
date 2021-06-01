@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GraphQLTesting.Models
 {
-    public partial class UserAccount
+    public partial class UserAccounts
     {
         public int Id { get; set; }
         public string Username { get; set; }

@@ -22,14 +22,14 @@ namespace GraphQLTesting.Models
         public virtual DbSet<CarInformation> CarInformations { get; set; }
         public virtual DbSet<CarStatus> CarStatuses { get; set; }
         public virtual DbSet<MigrationHistory> MigrationHistories { get; set; }
-        public virtual DbSet<UserAccount> UserAccounts { get; set; }
+        public virtual DbSet<UserAccounts> UserAccounts { get; set; }
         public virtual DbSet<WebSubscription> WebSubscriptions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//warning 621 To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=tcp:uriel-db.database.windows.net,1433;Initial Catalog=CarlistDb;Persist Security Info=False;User ID=uriel;Password=mercerst.13;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
@@ -84,7 +84,7 @@ namespace GraphQLTesting.Models
                     .HasMaxLength(32);
             });
 
-            modelBuilder.Entity<UserAccount>(entity =>
+            modelBuilder.Entity<UserAccounts>(entity =>
             {
                 entity.Property(e => e.CreatedTime).HasColumnType("datetime");
             });

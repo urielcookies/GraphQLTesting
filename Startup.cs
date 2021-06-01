@@ -32,6 +32,9 @@ namespace GraphQLTesting
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphQLTesting", Version = "v1" });
             });
+
+            // Inject DB context to be able to use in controllers
+            services.AddDbContext<Models.CarlistDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
