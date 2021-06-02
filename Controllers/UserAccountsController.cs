@@ -121,6 +121,43 @@ namespace GraphQLTesting.Controllers
             return Ok(HttpStatusCode.OK);
         }
 
+
+        //[HttpPost("api/expenses/add-expense")]
+        //public async Task<ActionResult<Models.CarExpense>> PostAddExpense(Models.CarExpense carExpense)
+        //{
+        //    _context.CarExpenses.Add(carExpense);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction("GetCarExpenses", new { id = carExpense.Id }, carExpense);
+        //}
+
+
+        public class ExpenseInfo
+        {
+            public string Expense { get; set; }
+            public decimal Cost { get; set; }
+            public DateTime CreatedTime { get; set; }
+        }
+        [HttpPost("api/expenses/add-expense")]
+        public async Task<ActionResult<ExpenseInfo>> AddExpense(ExpenseInfo carExpense)
+        {
+            var newCarExpense = new Models.CarExpense
+            {
+                Id = 0,
+                UserAccountId = 1003,
+                CarInformationId = 24,
+                Expense = carExpense.Expense,
+                Cost = carExpense.Cost,
+                CreatedTime = carExpense.CreatedTime,
+            };
+            _context.CarExpenses.Add(newCarExpense);
+            await _context.SaveChangesAsync();
+
+            // return CreatedAtAction("GetCarExpenses", new { id = newCarExpense.Id }, newCarExpense);
+            return Ok(HttpStatusCode.OK);
+        }
+
+
         private bool UserAccountsExists(int id)
         {
             return _context.UserAccounts.Any(e => e.Id == id);
