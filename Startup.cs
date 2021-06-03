@@ -1,3 +1,9 @@
+using GraphiQl;
+using GraphQL.Server;
+using GraphQL.Types;
+using GraphQLTesting.Query;
+using GraphQLTesting.Schema;
+using GraphQLTesting.Type;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +41,16 @@ namespace GraphQLTesting
 
             // Inject DB context to be able to use in controllers
             services.AddDbContext<Models.CarlistDbContext>();
+
+            // Configure GraphQL Server
+            services.AddSingleton<UserAccountsType>();
+            services.AddSingleton<UserAccountsQuery>();
+            services.AddSingleton<ISchema, UserAccountsSchema>();
+
+            services.AddGraphQL(options =>
+            {
+                options.EnableMetrics = false;
+            }).AddSystemTextJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,16 +63,20 @@ namespace GraphQLTesting
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GraphQLTesting v1"));
             }
 
-            app.UseHttpsRedirection();
+            app.UseGraphiQl("/graphql");
+            app.UseGraphQL<ISchema>();
 
-            app.UseRouting();
+            // Commented unused code
+            //app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            //app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //app.UseAuthorization();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
         }
     }
 }
