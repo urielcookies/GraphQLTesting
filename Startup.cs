@@ -43,9 +43,9 @@ namespace GraphQLTesting
             services.AddDbContext<Models.CarlistDbContext>();
 
             // Configure GraphQL Server
-            services.AddSingleton<UserAccountsType>();
-            services.AddSingleton<UserAccountsQuery>();
-            services.AddSingleton<ISchema, UserAccountsSchema>();
+            services.AddTransient<UserAccountsType>();
+            services.AddTransient<UserAccountsQuery>();
+            services.AddTransient<ISchema, UserAccountsSchema>();
 
             services.AddGraphQL(options =>
             {
